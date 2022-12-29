@@ -1,0 +1,8 @@
+require('color')
+require('formatter')
+require('keymap')
+require('lsp')
+require('remap')
+require('set')
+require('telescope')
+require('treesitter')
