@@ -106,7 +106,7 @@
       telescope-nvim
       vim-smoothie
       vim-surround
-      # which-key-nvim
+      which-key-nvim
 
       # Highlight selected symbol
       vim-illuminate
