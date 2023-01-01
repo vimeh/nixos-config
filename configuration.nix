@@ -104,6 +104,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.drivers = [ pkgs.brlaser pkgs.gutenprint pkgs.gutenprintBin ];
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -129,23 +130,6 @@
     isNormalUser = true;
     description = "vinay";
     extraGroups = [ "networkmanager" "wheel" "docker" "openrazer" "audio" "plugdev" ];
-    packages = with pkgs; [
-      firefox
-      git
-      gnumake
-      kitty
-      nil
-      obsidian
-      openssl
-      (pass.withExtensions (ext: with ext;
-      [
-        pass-otp
-      ]))
-      python310
-      python310Packages.pip
-      python310Packages.python-lsp-server
-      spotify-tui
-    ];
   };
 
   # Enable automatic login for the user.
@@ -189,5 +173,11 @@
   # networking.firewall.enable = false;
 
   system.stateVersion = "22.11";
+
+  programs.steam = {
+     enable = true;
+     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+   };
 
 }

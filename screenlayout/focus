@@ -1,0 +1,2 @@
+#!/bin/sh
+xrandr --output DP-1-0 --primary --mode 3440x1440 --pos 0x0 --refresh 85.00 --rotate normal

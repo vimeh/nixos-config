@@ -1,28 +1,38 @@
 { config, pkgs, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
+
+  nixpkgs.config.allowUnfree = true;
   home.username = "vinay";
   home.homeDirectory = "/home/vinay";
 
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "22.11";
+  xdg.enable = true;
 
-  home.packages = [
-    pkgs.btop
-    pkgs.htop
+  home.packages = with pkgs; [
+    obsidian
+    git
+    gnumake
+    kitty
+    nil
+    openssl
+    (pass.withExtensions (ext: with ext;
+    [
+      pass-otp
+    ]))
+    python310
+    python310Packages.pip
+    python310Packages.python-lsp-server
+    spotify-tui
+    btop
+    calibre
+    firefox
+    htop
+    offlineimap
+    spotifyd
+    tmux
   ];
 
-
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   programs.zsh = {
@@ -34,6 +44,12 @@
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
     };
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "Vinay Mehta";
+    userEmail = "vinaymehta.nyc@gmail.com";
   };
 
   programs.neovim = {
@@ -56,46 +72,76 @@
       nvim-treesitter-textobjects
       nvim-treesitter.withAllGrammars
       telescope-nvim
-      telescope-nvim
       vim-smoothie
       vim-surround
+      # which-key-nvim
 
-        # Highlight selected symbol
-        vim-illuminate
+      # Highlight selected symbol
+      vim-illuminate
 
-        # Completions
-        cmp-nvim-lsp
-        cmp-buffer
-        cmp-path
-        cmp-cmdline
-        cmp-nvim-lsp-signature-help
-        nvim-cmp
-        lspkind-nvim
+      # Completions
+      cmp-buffer
+      cmp-cmdline
+      cmp-nvim-lsp
+      cmp-nvim-lsp-signature-help
+      cmp-path
+      lspkind-nvim
+      nvim-cmp
 
-        # Snippets
-        luasnip
-        cmp_luasnip
+      # Snippets
+      luasnip
+      cmp_luasnip
 
     ];
-      extraPackages = with pkgs; [
-        tree-sitter
-        sumneko-lua-language-server
-        rnix-lsp
-        nixpkgs-fmt
-        pyright
-        black
-        ripgrep
-        fd
-      ];
-	  extraConfig = ''
-	  :luafile ~/.config/nvim/lua/init.lua
-	  '';
+    extraPackages = with pkgs; [
+      black
+      fd
+      nixpkgs-fmt
+      pyright
+      ripgrep
+      rnix-lsp
+      sumneko-lua-language-server
+      tree-sitter
+    ];
+    extraConfig = ''
+      :luafile ~/.config/nvim/lua/init.lua
+    '';
   };
 
+  xdg.configFile."kitty/kitty.conf" = {
+    source = ./kitty.conf;
+  };
 
   xdg.configFile.nvim = {
-      source = ./config;
-      recursive = true;
+    source = ./config;
+    recursive = true;
   };
+  xdg.configFile."offlineimap/config" = {
+    source = ./offlineimaprc;
+  };
+
+  xdg.configFile."i3/config" = {
+    source = ./i3_config;
+  };
+
+  xdg.configFile.i3status = {
+    source = ./i3status;
+    recursive = true;
+  };
+  xdg.configFile."spotifyd/spotifyd.conf" = {
+    source = ./spotifyd.conf;
+  };
+  xdg.configFile."spotify-tui/config.yml" = {
+    source = ./spotify-tui.yml;
+  };
+
+#  programs.firefox.profiles.default = {
+#    isDefault = true;
+#    settings = {
+#      "toolkit.legacyuserProfileCustomizations.stylesheets" = true;
+#      "signon.rememberSignons" = false;
+#    };
+#    userChrome = builtins.readFile ./userChrome.css;
+#  };
 
 }

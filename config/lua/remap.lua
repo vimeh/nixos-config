@@ -13,7 +13,7 @@ nnoremap("<C-L>", "<C-W><C-L>")
 nnoremap("<C-H>", "<C-W><C-H>")
 
 -- Python Development
-nnoremap("<leader>r", "<cmd>!python3 %<CR>") 
+nnoremap("<leader>r", "<cmd>!python3 %<CR>")
 nnoremap("<leader>d", "<cmd>bd!<CR>")
 
 -- Neotree
