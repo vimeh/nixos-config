@@ -10,11 +10,17 @@
   xdg.enable = true;
 
   home.packages = with pkgs; [
-    obsidian
+    btop
+    calibre
+    firefox
     git
     gnumake
+    htop
     kitty
+    neomutt
     nil
+    obsidian
+    offlineimap
     openssl
     (pass.withExtensions (ext: with ext;
     [
@@ -24,11 +30,6 @@
     python310Packages.pip
     python310Packages.python-lsp-server
     spotify-tui
-    btop
-    calibre
-    firefox
-    htop
-    offlineimap
     spotifyd
     tmux
   ];
@@ -44,6 +45,37 @@
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
     };
+    zplug = {
+      enable = true;
+      plugins = [
+        { name = "zsh-users/zsh-autosuggestions"; }
+        { name = "zsh-users/zsh-syntax-highlighting"; }
+        { name = "zsh-users/zsh-completions"; }
+      ];
+    };
+  };
+
+  programs.tmux = {
+    enable = true;
+    shortcut = "a";
+    keyMode = "vi";
+    newSession = true;
+    # escapeTime = 0;
+    secureSocket = false;
+    extraConfig = ''
+      bind-key -n M-s split-window -v
+      bind-key -n M-S split-window -h 
+
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+
+      bind-key -n M-h select-pane -L
+      bind-key -n M-j select-pane -D
+      bind-key -n M-k select-pane -U
+      bind-key -n M-l select-pane -R
+    '';
   };
 
   programs.git = {
@@ -108,40 +140,29 @@
     '';
   };
 
-  xdg.configFile."kitty/kitty.conf" = {
-    source = ./kitty.conf;
+  xdg.configFile = {
+    "kitty/kitty.conf".source = ./kitty.conf;
+    nvim = {
+      source = ./config;
+      recursive = true;
+    };
+    "offlineimap/config".source = ./offlineimaprc;
+    "i3/config".source = ./i3_config;
+    i3status.source = ./i3status;
+    "neomutt/neomuttrc".source = ./neomuttrc;
+    "spotifyd/spotifyd.conf".source = ./spotifyd.conf;
+    "spotify-tui/config.yml".source = ./spotify-tui.yml;
   };
 
-  xdg.configFile.nvim = {
-    source = ./config;
-    recursive = true;
-  };
-  xdg.configFile."offlineimap/config" = {
-    source = ./offlineimaprc;
-  };
 
-  xdg.configFile."i3/config" = {
-    source = ./i3_config;
-  };
+  #  programs.firefox.profiles.default = {
+  #    isDefault = true;
+  #    settings = {
+  #      "toolkit.legacyuserProfileCustomizations.stylesheets" = true;
+  #      "signon.rememberSignons" = false;
+  #    };
+  #    userChrome = builtins.readFile ./userChrome.css;
+  #  };
 
-  xdg.configFile.i3status = {
-    source = ./i3status;
-    recursive = true;
-  };
-  xdg.configFile."spotifyd/spotifyd.conf" = {
-    source = ./spotifyd.conf;
-  };
-  xdg.configFile."spotify-tui/config.yml" = {
-    source = ./spotify-tui.yml;
-  };
-
-#  programs.firefox.profiles.default = {
-#    isDefault = true;
-#    settings = {
-#      "toolkit.legacyuserProfileCustomizations.stylesheets" = true;
-#      "signon.rememberSignons" = false;
-#    };
-#    userChrome = builtins.readFile ./userChrome.css;
-#  };
 
 }

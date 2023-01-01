@@ -1,4 +1,5 @@
 all: 	nix-switch
+	home-manager switch
 	@echo
 
 nix-switch:

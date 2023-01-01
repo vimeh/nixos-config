@@ -201,7 +201,7 @@ bar {
 }
 
 
-bindsym $mod+Shift+x exec systemctl suspend 
+bindsym $mod+Shift+x exec systemctl hibernate 
 bindsym $mod+Shift+z exec i3lock 
 
 # Move focused workspace between monitors

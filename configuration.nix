@@ -3,7 +3,7 @@
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports =
-    [ 
+    [
       /etc/nixos/hardware-configuration.nix
       <home-manager/nixos>
     ];
@@ -11,12 +11,13 @@
   # bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+  sound.mediaKeys.enable = true;
 
   # hardware
   hardware.openrazer.enable = true;
 
   # for i3
-  environment.pathsToLink = ["/libexec"];
+  environment.pathsToLink = [ "/libexec" ];
 
   # Nvidia stuff
   boot.kernelParams = [ "button.lid_init_state=open" ];
@@ -54,6 +55,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  security.auditd.enable = true;
+  security.audit.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
@@ -86,9 +90,9 @@
     libinput.enable = true;
 
     displayManager = {
-        defaultSession = "none+i3";
-        lightdm.enable = true;
-        sessionCommands = "setxkbmap -option caps:escape";
+      defaultSession = "none+i3";
+      lightdm.enable = true;
+      sessionCommands = "setxkbmap -option caps:escape";
     };
 
     windowManager.i3 = {
@@ -97,7 +101,7 @@
         dmenu
         i3status
         i3lock
-     ];
+      ];
     };
 
   };
@@ -129,7 +133,7 @@
   users.users.vinay = {
     isNormalUser = true;
     description = "vinay";
-    extraGroups = [ "networkmanager" "wheel" "docker" "openrazer" "audio" "plugdev" ];
+    extraGroups = [ "video" "networkmanager" "wheel" "docker" "openrazer" "audio" "plugdev" ];
   };
 
   # Enable automatic login for the user.
@@ -144,27 +148,46 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    cargo
     gnupg
     pinentry-curses
-    vim_configurable
-    wget
+    rust-analyzer
     rustc
     rustup
-    cargo
-    rust-analyzer
+    vim_configurable
+    wget
   ];
   environment.shells = with pkgs; [ zsh ];
   environment.variables.EDITOR = "nvim";
 
   programs = {
     nm-applet.enable = true;
-    zsh.enable = true;
     ssh.startAgent = true;
+    zsh.enable = true;
+  };
+
+  programs.gnupg = {
+    agent = {
+      enable = true;
+      enableExtraSocket = true;
+      pinentryFlavor = "curses";
+    };
   };
 
   # List services that you want to enable:
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services = {
+    openssh = {
+      enable = true;
+      permitRootLogin = "prohibit-password";
+      # passwordAuthentication = false;
+      # allowSFTP = false;
+    };
+    fail2ban = {
+      enable = true;
+      ignoreIP = [ ];
+    };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -175,9 +198,22 @@
   system.stateVersion = "22.11";
 
   programs.steam = {
-     enable = true;
-     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-   };
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  };
+
+  # light media keys
+  programs.light.enable = true;
+
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      { keys = [ 75 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+      { keys = [ 74 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+    ];
+  };
+
+  fonts.fonts = [ pkgs.nerdfonts ];
 
 }
