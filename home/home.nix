@@ -143,7 +143,7 @@
   xdg.configFile = {
     "kitty/kitty.conf".source = ./kitty.conf;
     nvim = {
-      source = ./config;
+      source = ./nvim;
       recursive = true;
     };
     "offlineimap/config".source = ./offlineimaprc;
