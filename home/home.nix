@@ -93,35 +93,21 @@ in
     viAlias = true;
     vimAlias = true;
     plugins = with pkgs.vimPlugins; [
+      # plugins set up in nvim/ 
+      # color.lua
       catppuccin-nvim
-      comment-nvim
       feline-nvim
-      {
-        plugin = gitsigns-nvim;
-        type = "lua";
-        config = "require('gitsigns').setup({
-           sign_priority = 0,
-         })
-         ";
-      }
+
+      # telescope.lua 
+      telescope-nvim
       harpoon
-      leap-nvim
-      legendary-nvim
-      neo-tree-nvim
-      nvim-autopairs
+
+      # lsp.lua
       nvim-lspconfig
       nvim-notify
       nvim-treesitter-refactor
       nvim-treesitter-textobjects
       nvim-treesitter.withAllGrammars
-      telescope-nvim
-      vim-smoothie
-      vim-surround
-      which-key-nvim
-
-      # Highlight selected symbol
-      vim-illuminate
-
       # Completions
       cmp-buffer
       cmp-cmdline
@@ -131,13 +117,50 @@ in
       lspkind-nvim
       nvim-cmp
       cmp-copilot
-
       # Snippets
       luasnip
       cmp_luasnip
 
-      # formatter
+      # formatter.lua
       neoformat
+
+      # filetree viewer
+      neo-tree-nvim
+
+      # plugins set up here
+      {
+        plugin = gitsigns-nvim;
+        type = "lua";
+        config = "require('gitsigns').setup({
+           sign_priority = 0,
+         })
+         ";
+      }
+      {
+        plugin = which-key-nvim;
+        type = "lua";
+        config = "require('which-key').setup()";
+      }
+      {
+        plugin = nvim-autopairs;
+        type = "lua";
+        config = "require('nvim-autopairs').setup()";
+      }
+      {
+        plugin = nvim-surround;
+        type = "lua";
+        config = "require('nvim-surround').setup()";
+      }
+      {
+        plugin = comment-nvim;
+        type = "lua";
+        config = "require('Comment').setup()";
+      }
+      {
+        plugin = leap-nvim;
+        type = "lua";
+        config = "require('leap').add_default_mappings()";
+      }
 
     ] ++ [ pkgsUnstable.vimPlugins.copilot-lua ];
     extraPackages = with pkgs; [
