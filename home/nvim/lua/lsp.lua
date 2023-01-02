@@ -1,5 +1,47 @@
 local nvim_lsp = require("lspconfig")
 
+-- autocomplete
+local luasnip = require("luasnip")
+
+local cmp = require("cmp")
+cmp.setup = {
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<CR>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true,
+		}),
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+	}),
+	source = {
+		{ name = "copilot" },
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+	},
+}
+
 local notify = require("notify")
 vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
 	local client = vim.lsp.get_client_by_id(ctx.client_id)
@@ -69,45 +111,3 @@ nvim_lsp.rnix.setup({
 })
 -- Python
 default_lsp_setup("pyright")
-
--- autocomplete
-local luasnip = require("luasnip")
-
-local cmp = require("cmp")
-cmp.setup = {
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	mapping = cmp.mapping.preset.insert({
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
-		}),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-	}),
-	source = {
-		{ name = "copilot" },
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-	},
-}
