@@ -1,38 +1,16 @@
-# i3 config file (v4)
-#
-# Please see https://i3wm.org/docs/userguide.html for a complete reference!
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 14 
 
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# Start system tray applets
 exec blueman-applet
-exec cadmus
-exec unclutter -idle 0.5
-exec_always --no-starup-id workstyle &> /tmp/workstyle.log
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -45,10 +23,9 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# quick passmenu access
+bindsym $mod+p exec passmenu 
 
 # change focus
 bindsym $mod+h focus left
@@ -56,23 +33,11 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
 bindsym $mod+z split h
@@ -96,9 +61,6 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -158,27 +120,21 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+  # These bindings trigger as soon as you enter the resize mode
+  
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym h resize shrink width 10 px or 10 ppt
+  bindsym j resize grow height 10 px or 10 ppt
+  bindsym k resize shrink height 10 px or 10 ppt
+  bindsym l resize grow width 10 px or 10 ppt
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Caps_Lock mode "default"
-        bindsym $mod+r mode "default"
+# back to normal: Enter or Escape or $mod+r
+  bindsym Return mode "default"
+  bindsym Caps_Lock mode "default"
+  bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -186,21 +142,21 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-# laptop monitor
-        status_command i3status --config ~/.config/i3status/config_laptop 
-        output eDP-1-1
-        tray_output eDP-1-1
+  # laptop monitor
+  status_command i3status --config ~/.config/i3status/config_laptop 
+  output eDP-1-1
+  tray_output eDP-1-1
 }
 
 bar {
-# big monitor
-        status_command i3status --config ~/.config/i3status/config_uwscreen
-        output DP-0
-        tray_output none
-        position top
+  # big monitor
+  status_command i3status --config ~/.config/i3status/config_uwscreen
+  output DP-0
+  tray_output none
+  position top
 }
 
-
+# Hibernate or sleep
 bindsym $mod+Shift+x exec systemctl hibernate 
 bindsym $mod+Shift+z exec i3lock 
 
@@ -210,8 +166,7 @@ bindsym $mod+Ctrl+Shift+j move workspace to output down
 bindsym $mod+Ctrl+Shift+k move workspace to output up 
 bindsym $mod+Ctrl+Shift+l move workspace to output right 
 
-
-# Screenshots
+# Take a screenshot
 bindsym $mod+Shift+s exec flameshot gui 
 
 # keep monitors on particular screens
@@ -226,15 +181,15 @@ set $mode_launcher Launch: [f]irefox [s]team s[p]otify [m]ail [o]bsidian [n]auti
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
-    bindsym f exec firefox; mode "default" 
-    bindsym s exec steam; mode "default" 
-    bindsym p exec kitty spt; mode "default" 
-    bindsym m exec kitty neomutt; mode "default"   
-    bindsym o exec obsidian; mode "default" 
-    bindsym n exec nautilus; mode "default" 
+  bindsym f exec firefox; mode "default" 
+  bindsym s exec steam; mode "default" 
+  bindsym p exec kitty spt; mode "default" 
+  bindsym m exec kitty neomutt; mode "default"   
+  bindsym o exec obsidian; mode "default" 
+  bindsym n exec nautilus; mode "default" 
 
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
 }
 
 # quick set screens
@@ -242,16 +197,16 @@ set $mode_screens Screens
 bindsym $mod+Shift+f mode "$mode_screens"
 
 mode "$mode_screens" {
-    set $screens_dir /home/vinay/.screenlayout
-    bindsym 1 exec $screens_dir/focus; mode "default" 
-    bindsym 2 exec $screens_dir/twoscreen; mode "default" 
-    bindsym 3 exec $screens_dir/threescreen; mode "default" 
-    bindsym l exec $screens_dir/laptop; mode "default"
-    bindsym s exec $screens_dir/laptop_sd; mode "default"
-    bindsym r exec $screens_dir/reading; mode "default"
+  set $screens_dir /home/vinay/.screenlayout
+  bindsym 1 exec $screens_dir/focus; mode "default" 
+  bindsym 2 exec $screens_dir/twoscreen; mode "default" 
+  bindsym 3 exec $screens_dir/threescreen; mode "default" 
+  bindsym l exec $screens_dir/laptop; mode "default"
+  bindsym s exec $screens_dir/laptop_sd; mode "default"
+  bindsym r exec $screens_dir/reading; mode "default"
 
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
 }
 
 # ricing
@@ -264,10 +219,6 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 client.background       #ffffff
 
-
 # remove window titles
 for_window [class="^.*"] border pixel 1
-
-# quick passmenu access
-bindsym $mod+p exec passmenu 
 
