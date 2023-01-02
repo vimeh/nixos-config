@@ -1,7 +1,7 @@
 [general]
 ui = ttyui 
 accounts = vinaymehta.nyc, vinaym
-pythonfile=/home/vinay/code/nixos-config/offlineimap.py
+pythonFile = /home/vinay/code/nixos-config/home/offlineimap.py
 fsync = False
 
 [Account vinaymehta.nyc]

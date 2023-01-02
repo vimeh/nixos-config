@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  pkgsUnstable = import <nixpkgs-unstable> { };
+in
 {
 
   nixpkgs.config.allowUnfree = true;
@@ -19,13 +22,14 @@
     kitty
     neomutt
     nil
+    nodejs-16_x
     obsidian
-    offlineimap
     openssl
     (pass.withExtensions (ext: with ext;
     [
       pass-otp
     ]))
+    pasystray
     python310
     python310Packages.pip
     python310Packages.python-lsp-server
@@ -104,6 +108,7 @@
       nvim-treesitter-textobjects
       nvim-treesitter.withAllGrammars
       telescope-nvim
+      vim-signify
       vim-smoothie
       vim-surround
       which-key-nvim
@@ -119,16 +124,21 @@
       cmp-path
       lspkind-nvim
       nvim-cmp
+      cmp-copilot
 
       # Snippets
       luasnip
       cmp_luasnip
 
-    ];
+      # formatter
+      neoformat
+
+    ] ++ [ pkgsUnstable.vimPlugins.copilot-lua ];
     extraPackages = with pkgs; [
       black
       fd
       nixpkgs-fmt
+      stylua
       pyright
       ripgrep
       rnix-lsp
@@ -139,6 +149,12 @@
       :luafile ~/.config/nvim/lua/init.lua
     '';
   };
+
+  programs.offlineimap = {
+    enable = true;
+  };
+
+
 
   xdg.configFile = {
     "kitty/kitty.conf".source = ./kitty.conf;
@@ -153,7 +169,6 @@
     "spotifyd/spotifyd.conf".source = ./spotifyd.conf;
     "spotify-tui/config.yml".source = ./spotify-tui.yml;
   };
-
 
   #  programs.firefox.profiles.default = {
   #    isDefault = true;
