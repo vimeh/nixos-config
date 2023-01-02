@@ -43,7 +43,7 @@ bindsym $mod+Shift+l move right
 bindsym $mod+z split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+x split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -208,6 +208,10 @@ mode "$mode_screens" {
   bindsym Escape mode "default"
   bindsym Return mode "default"
 }
+
+# copy/paste
+bindsym $mod+c exec "CM_ONESHOT=1 clipmenud"
+bindsym $mod+v exec clipmenu
 
 # ricing
 # class                 border  backgr. text    indicator child_border

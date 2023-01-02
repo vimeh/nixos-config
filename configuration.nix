@@ -149,6 +149,7 @@
 
   environment.systemPackages = with pkgs; [
     cargo
+    clipmenu
     gnupg
     pinentry-curses
     rust-analyzer
