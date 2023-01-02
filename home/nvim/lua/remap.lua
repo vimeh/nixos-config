@@ -26,19 +26,31 @@ nnoremap("<leader>o", "<cmd>Neotree focus<CR>")
 -- Clear highlighting
 nnoremap("<leader>,", "<cmd>noh<CR>")
 
--- System copy 
-vnoremap("<leader>c", "\"+y<CR>")
+-- System copy
+vnoremap("<leader>c", '"+y<CR>')
 
 -- Telescope
 nnoremap("<leader>f", "<cmd>Telescope<CR>")
 
 -- Harpoon
-nnoremap("<leader>a", function() require("harpoon.mark").add_file() end, silent)
-nnoremap("<leader>s", function() require("harpoon.ui").toggle_quick_menu() end, silent)
-nnoremap("<leader>h", function() require("harpoon.ui").nav_file(1) end, silent)
-nnoremap("<leader>j", function() require("harpoon.ui").nav_file(2) end, silent)
-nnoremap("<leader>k", function() require("harpoon.ui").nav_file(3) end, silent)
-nnoremap("<leader>l", function() require("harpoon.ui").nav_file(4) end, silent)
+nnoremap("<leader>a", function()
+	require("harpoon.mark").add_file()
+end, silent)
+nnoremap("<leader>s", function()
+	require("harpoon.ui").toggle_quick_menu()
+end, silent)
+nnoremap("<leader>h", function()
+	require("harpoon.ui").nav_file(1)
+end, silent)
+nnoremap("<leader>j", function()
+	require("harpoon.ui").nav_file(2)
+end, silent)
+nnoremap("<leader>k", function()
+	require("harpoon.ui").nav_file(3)
+end, silent)
+nnoremap("<leader>l", function()
+	require("harpoon.ui").nav_file(4)
+end, silent)
 
 -- Terminal
 -- nnoremap("<leader>t", "<cmd>ToggleTerm<CR>")
