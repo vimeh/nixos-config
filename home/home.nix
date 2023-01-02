@@ -96,7 +96,14 @@ in
       catppuccin-nvim
       comment-nvim
       feline-nvim
-      gitsigns-nvim
+      {
+        plugin = gitsigns-nvim;
+        type = "lua";
+        config = "require('gitsigns').setup({
+           sign_priority = 0,
+         })
+         ";
+      }
       harpoon
       leap-nvim
       legendary-nvim
@@ -108,7 +115,6 @@ in
       nvim-treesitter-textobjects
       nvim-treesitter.withAllGrammars
       telescope-nvim
-      vim-signify
       vim-smoothie
       vim-surround
       which-key-nvim
