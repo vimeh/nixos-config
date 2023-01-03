@@ -20,6 +20,7 @@ in
     gnumake
     htop
     kitty
+    lazygit
     neomutt
     nil
     nodejs-16_x
@@ -164,6 +165,7 @@ in
         type = "lua";
         config = "require('fidget').setup()";
       }
+      lazygit-nvim
 
     ] ++ [
       pkgsUnstable.vimPlugins.copilot-lua
