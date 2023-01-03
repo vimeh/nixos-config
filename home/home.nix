@@ -104,7 +104,6 @@ in
 
       # lsp.lua
       nvim-lspconfig
-      nvim-notify
       nvim-treesitter-refactor
       nvim-treesitter-textobjects
       nvim-treesitter.withAllGrammars
@@ -116,7 +115,7 @@ in
       cmp-path
       lspkind-nvim
       nvim-cmp
-      cmp-copilot
+      # cmp-copilot
       # Snippets
       luasnip
       cmp_luasnip
@@ -160,6 +159,11 @@ in
         plugin = leap-nvim;
         type = "lua";
         config = "require('leap').add_default_mappings()";
+      }
+      {
+        plugin = fidget-nvim;
+        type = "lua";
+        config = "require('fidget').setup()";
       }
 
     ] ++ [ pkgsUnstable.vimPlugins.copilot-lua ];
