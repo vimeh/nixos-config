@@ -7,7 +7,7 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.hlsearch = true
+vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.showmatch = true
 
@@ -31,3 +31,9 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 vim.opt.signcolumn = "yes:2"
+
+vim.opt.swapfile = false
+vim.opt.backup = false
+
+vim.opt.scrolloff = 8
+vim.opt.updatetime = 50
