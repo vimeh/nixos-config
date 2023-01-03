@@ -68,7 +68,7 @@ in
     secureSocket = false;
     extraConfig = ''
       bind-key -n M-s split-window -v
-      bind-key -n M-S split-window -h 
+      bind-key -n M-S split-window -h
 
       bind h select-pane -L
       bind j select-pane -D
@@ -93,12 +93,12 @@ in
     viAlias = true;
     vimAlias = true;
     plugins = with pkgs.vimPlugins; [
-      # plugins set up in nvim/ 
+      # plugins set up in nvim/
       # color.lua
       catppuccin-nvim
       feline-nvim
 
-      # telescope.lua 
+      # telescope.lua
       telescope-nvim
       harpoon
 
@@ -115,7 +115,6 @@ in
       cmp-path
       lspkind-nvim
       nvim-cmp
-      # cmp-copilot
       # Snippets
       luasnip
       cmp_luasnip
@@ -131,9 +130,9 @@ in
         plugin = gitsigns-nvim;
         type = "lua";
         config = "require('gitsigns').setup({
-           sign_priority = 0,
-         })
-         ";
+            sign_priority = 0,
+          })
+          ";
       }
       {
         plugin = which-key-nvim;
@@ -166,12 +165,14 @@ in
         config = "require('fidget').setup()";
       }
 
-    ] ++ [ pkgsUnstable.vimPlugins.copilot-lua ];
+    ] ++ [
+      pkgsUnstable.vimPlugins.copilot-lua
+      # pkgsUnstable.vimPlugins.copilot-cmp
+    ];
     extraPackages = with pkgs; [
       black
       fd
       nixpkgs-fmt
-      stylua
       pyright
       ripgrep
       rnix-lsp

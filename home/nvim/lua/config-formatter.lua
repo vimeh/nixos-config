@@ -8,29 +8,21 @@ vim.g.neoformat_basic_format_retab = 1
 vim.g.neoformat_basic_format_trim = 1
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.py" },
-	callback = function()
-		vim.cmd("Neoformat")
-	end,
+  pattern = { "*.py" },
+  callback = function() vim.cmd("Neoformat") end
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.nix" },
-	callback = function()
-		vim.cmd("Neoformat")
-	end,
+  pattern = { "*.nix" },
+  callback = function() vim.cmd("Neoformat") end
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.rs" },
-	callback = function()
-		vim.cmd("Neoformat")
-	end,
+  pattern = { "*.rs" },
+  callback = function() vim.cmd("Neoformat") end
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.lua" },
-	callback = function()
-		vim.cmd("Neoformat")
-	end,
+  pattern = { "*.lua" },
+  callback = function() vim.lsp.buf.format { async = true } end
 })
