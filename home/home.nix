@@ -12,6 +12,15 @@ in
   home.stateVersion = "22.11";
   xdg.enable = true;
 
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 7200;
+    defaultCacheTtlSsh = 1800;
+    extraConfig = ''
+      allow-loopback-pinentry
+    '';
+  };
+
   home.packages = with pkgs; [
     btop
     calibre
