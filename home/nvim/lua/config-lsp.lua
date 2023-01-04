@@ -42,3 +42,10 @@ lspconfig["sumneko_lua"].setup({
     }
   }
 })
+
+local capabilities_html = vim.lsp.protocol.make_client_capabilities()
+capabilities_html.textDocument.completion.completionItem.snippetSupport = true
+lspconfig["html"].setup({
+  capabilities = capabilities_html,
+  filetypes = { "html", "htmldjango" }
+})

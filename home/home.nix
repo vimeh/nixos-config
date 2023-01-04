@@ -25,6 +25,7 @@ in
     btop
     calibre
     firefox
+    gcc
     git
     gnumake
     htop
@@ -48,7 +49,11 @@ in
     tmux
   ];
 
-  programs.home-manager.enable = true;
+
+  programs = {
+    home-manager.enable = true;
+    offlineimap.enable = true;
+  };
 
   programs.zsh = {
     enable = true;
@@ -174,6 +179,14 @@ in
         type = "lua";
         config = "require('fidget').setup()";
       }
+      {
+        plugin = indent-blankline-nvim;
+        type = "lua";
+        config = "require('indent_blankline').setup({
+            show_current_context = true,
+            show_current_context_start = true,
+          })";
+      }
       lazygit-nvim
 
     ] ++ [
@@ -184,6 +197,8 @@ in
       black
       fd
       nixpkgs-fmt
+      nodePackages.vscode-langservers-extracted
+      nodePackages.yaml-language-server
       pyright
       ripgrep
       rnix-lsp
@@ -193,10 +208,6 @@ in
     extraConfig = ''
       :luafile ~/.config/nvim/lua/init.lua
     '';
-  };
-
-  programs.offlineimap = {
-    enable = true;
   };
 
 
