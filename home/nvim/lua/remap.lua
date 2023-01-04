@@ -52,8 +52,8 @@ wk.register({
   name = "Harpoon",
   a = { require("harpoon.mark").add_file, "Add File" },
   s = { require("harpoon.ui").toggle_quick_menu, "Toggle Quick Menu" },
-  h = { require("harpoon.ui").nav_file(1), "Navigate to File 1" },
-  j = { require("harpoon.ui").nav_file(2), "Navigate to File 2" },
-  k = { require("harpoon.ui").nav_file(3), "Navigate to File 3" },
-  l = { require("harpoon.ui").nav_file(4), "Navigate to File 4" },
+  h = { "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", "Nav to File 1" },
+  j = { "<cmd>lua require('harpoon.ui').nav_file(2)<cr>", "Nav to File 2" },
+  k = { "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", "Nav to File 3" },
+  l = { "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", "Nav to File 4" },
 }, { prefix = "<leader>" })
