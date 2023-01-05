@@ -22,9 +22,11 @@ in
   };
 
   home.packages = with pkgs; [
+    arandr
     btop
     calibre
     firefox
+    flameshot
     gcc
     git
     gnumake
@@ -36,6 +38,7 @@ in
     nodejs-16_x
     obsidian
     openssl
+    pamixer
     (pass.withExtensions (ext: with ext;
     [
       pass-otp
@@ -47,19 +50,28 @@ in
     spotify-tui
     spotifyd
     tmux
+    fzf
   ];
 
 
   programs = {
     home-manager.enable = true;
     offlineimap.enable = true;
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
   };
 
   programs.zsh = {
     enable = true;
     shellAliases = {
       ll = "ls -la";
+      cd = "z";
     };
+    initExtra = ''
+      cl() { z "$@" && ls; };
+    '';
     history = {
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
@@ -187,7 +199,15 @@ in
             show_current_context_start = true,
           })";
       }
+      {
+        plugin = nvim-lastplace;
+        type = "lua";
+        config = "require('nvim-lastplace').setup()";
+      }
       lazygit-nvim
+      cmp-copilot
+      markdown-preview-nvim
+
 
     ] ++ [
       pkgsUnstable.vimPlugins.copilot-lua

@@ -57,3 +57,11 @@ wk.register({
   k = { "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", "Nav to File 3" },
   l = { "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", "Nav to File 4" },
 }, { prefix = "<leader>" })
+
+
+-- Indent/Unindent
+vim.keymap.set("v", "<Tab>", ">gv")
+vim.keymap.set("n", "<Tab>", "v><C-\\><C-N>")
+vim.keymap.set("v", "<S-Tab>", "<gv")
+vim.keymap.set("n", "<S-Tab>", "v<<C-\\><C-N>")
+vim.keymap.set("i", "<S-Tab>", "<C-\\><C-N>v<<C-\\><C-N>^i")
