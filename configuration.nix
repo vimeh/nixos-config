@@ -120,8 +120,6 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -152,11 +150,14 @@
     clipmenu
     gnupg
     pinentry-curses
+    plasma-pa
     rust-analyzer
     rustc
     rustup
     vim_configurable
+    volctl
     wget
+    xorg.xev
   ];
   environment.shells = with pkgs; [ zsh ];
   environment.variables.EDITOR = "nvim";
@@ -210,8 +211,12 @@
   services.actkbd = {
     enable = true;
     bindings = [
-      { keys = [ 75 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
-      { keys = [ 74 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 225 ]; events = [ "key" ]; command = "pamixer -d 100"; }
+      { keys = [ 172 ]; events = [ "key" ]; command = "pamixer -d 5"; }
+      { keys = [ 121 ]; events = [ "key" ]; command = "pamixer -i 5"; }
+      # TODO: might need sudo / group access here?
+      { keys = [ 232 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 233 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
     ];
   };
 
