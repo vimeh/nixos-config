@@ -15,9 +15,11 @@ in
     enable = true;
     associations.added = {
       "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+      "text/plain" = [ "nvim.desktop" ];
     };
     defaultApplications = {
       "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+      "text/plain" = [ "nvim.desktop" ];
     };
   };
 
@@ -83,6 +85,8 @@ in
     shellAliases = {
       ll = "ls -la";
       cd = "z";
+      open = "cd ~; xdg-open $(fzf)";
+      o = "xdg-open $@";
     };
     initExtra = ''
       cl() { z "$@" && ls; };
