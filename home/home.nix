@@ -11,6 +11,15 @@ in
 
   home.stateVersion = "22.11";
   xdg.enable = true;
+  xdg.mimeApps = {
+    enable = true;
+    associations.added = {
+      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+    };
+    defaultApplications = {
+      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+    };
+  };
 
   services.gpg-agent = {
     enable = true;
@@ -51,6 +60,10 @@ in
     spotifyd
     tmux
     fzf
+
+    # PDF viewers; TODO choose one?
+    evince
+    zathura
   ];
 
 
