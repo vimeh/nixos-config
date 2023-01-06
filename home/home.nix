@@ -22,6 +22,12 @@ in
       "text/plain" = [ "nvim.desktop" ];
     };
   };
+  xdg.userDirs = {
+    enable = true;
+    desktop = "${config.home.homeDirectory}";
+    documents = "${config.home.homeDirectory}/docs";
+    download = "${config.home.homeDirectory}/temp";
+  };
 
   services.gpg-agent = {
     enable = true;
