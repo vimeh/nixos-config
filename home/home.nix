@@ -35,6 +35,8 @@ in
     btop
     calibre
     firefox
+    fd
+    fzf
     flameshot
     gcc
     git
@@ -56,10 +58,10 @@ in
     python310
     python310Packages.pip
     python310Packages.python-lsp-server
+    ripgrep-all
     spotify-tui
     spotifyd
     tmux
-    fzf
 
     # PDF viewers; TODO choose one?
     evince
@@ -170,9 +172,9 @@ in
         plugin = gitsigns-nvim;
         type = "lua";
         config = "require('gitsigns').setup({
-            sign_priority = 0,
-          })
-          ";
+      sign_priority = 0,
+      })
+      ";
       }
       {
         plugin = which-key-nvim;
@@ -208,9 +210,9 @@ in
         plugin = indent-blankline-nvim;
         type = "lua";
         config = "require('indent_blankline').setup({
-            show_current_context = true,
-            show_current_context_start = true,
-          })";
+      show_current_context = true,
+      show_current_context_start = true,
+      })";
       }
       {
         plugin = nvim-lastplace;
@@ -228,12 +230,11 @@ in
     ];
     extraPackages = with pkgs; [
       black
-      fd
       nixpkgs-fmt
+      nodePackages.bash-language-server
       nodePackages.vscode-langservers-extracted
       nodePackages.yaml-language-server
       pyright
-      ripgrep
       rnix-lsp
       sumneko-lua-language-server
       tree-sitter
