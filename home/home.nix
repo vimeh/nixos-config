@@ -10,23 +10,38 @@ in
   home.homeDirectory = "/home/vinay";
 
   home.stateVersion = "22.11";
-  xdg.enable = true;
-  xdg.mimeApps = {
+  xdg = {
     enable = true;
-    associations.added = {
-      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
-      "text/plain" = [ "nvim.desktop" ];
+    userDirs = {
+      enable = true;
+      desktop = "${config.home.homeDirectory}";
+      documents = "${config.home.homeDirectory}/docs";
+      download = "${config.home.homeDirectory}/temp";
     };
-    defaultApplications = {
-      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
-      "text/plain" = [ "nvim.desktop" ];
+    configFile = {
+      "kitty/kitty.conf".source = ./kitty.conf;
+      nvim = {
+        source = ./nvim;
+        recursive = true;
+      };
+      "offlineimap/config".source = ./offlineimaprc;
+      "i3/config".source = ./i3_config;
+      i3status.source = ./i3status;
+      "neomutt/neomuttrc".source = ./neomuttrc;
+      "spotifyd/spotifyd.conf".source = ./spotifyd.conf;
+      "spotify-tui/config.yml".source = ./spotify-tui.yml;
     };
-  };
-  xdg.userDirs = {
-    enable = true;
-    desktop = "${config.home.homeDirectory}";
-    documents = "${config.home.homeDirectory}/docs";
-    download = "${config.home.homeDirectory}/temp";
+    mimeApps = {
+      enable = true;
+      associations.added = {
+        "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+        "text/plain" = [ "nvim.desktop" ];
+      };
+      defaultApplications = {
+        "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+        "text/plain" = [ "nvim.desktop" ];
+      };
+    };
   };
 
   services.gpg-agent = {
@@ -256,19 +271,6 @@ in
 
 
 
-  xdg.configFile = {
-    "kitty/kitty.conf".source = ./kitty.conf;
-    nvim = {
-      source = ./nvim;
-      recursive = true;
-    };
-    "offlineimap/config".source = ./offlineimaprc;
-    "i3/config".source = ./i3_config;
-    i3status.source = ./i3status;
-    "neomutt/neomuttrc".source = ./neomuttrc;
-    "spotifyd/spotifyd.conf".source = ./spotifyd.conf;
-    "spotify-tui/config.yml".source = ./spotify-tui.yml;
-  };
 
   #  programs.firefox.profiles.default = {
   #    isDefault = true;
