@@ -7,7 +7,7 @@ wk.register({
   name = "QoL",
   w = { "<cmd>w<cr>", "Save" },
   q = { "<cmd>q<cr>", "Quit" },
-  x = { "<cmd>x<cr>", "Quit" },
+  -- x = { "<cmd>x<cr>", "Quit" },
   e = { "<cmd>Neotree toggle<cr>", "Explorer" },
   gg = { "<cmd>LazyGit<cr>", "LazyGit" }
 }, { prefix = "<leader>" })
@@ -65,3 +65,15 @@ vim.keymap.set("n", "<Tab>", "v><C-\\><C-N>")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set("n", "<S-Tab>", "v<<C-\\><C-N>")
 vim.keymap.set("i", "<S-Tab>", "<C-\\><C-N>v<<C-\\><C-N>^i")
+
+-- Trouble
+wk.register({
+  x = {
+    name = "Trouble",
+    x = { "<cmd>TroubleToggle<cr>", "Toggle" },
+    w = { "cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace Diagnostics" },
+    d = { "cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics" },
+    q = { "cmd>TroubleToggle quickfix<cr>", "Quickfix" },
+    l = { "cmd>TroubleToggle loclist<cr>", "Loclist" },
+  },
+}, { prefix = "<leader>" })

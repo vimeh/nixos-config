@@ -257,14 +257,18 @@ in
         type = "lua";
         config = "require('nvim-lastplace').setup()";
       }
+      {
+        plugin = trouble-nvim;
+        type = "lua";
+        config = "require('trouble').setup()";
+      }
       lazygit-nvim
-      cmp-copilot
       markdown-preview-nvim
-
+      nvim-web-devicons
 
     ] ++ [
       pkgsUnstable.vimPlugins.copilot-lua
-      # pkgsUnstable.vimPlugins.copilot-cmp
+      pkgsUnstable.vimPlugins.copilot-cmp
     ];
     extraPackages = with pkgs; [
       black
