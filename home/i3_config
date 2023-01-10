@@ -11,6 +11,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # Start system tray applets
 exec blueman-applet
 exec --no-startup-id nm-applet
+exec volctl
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -177,7 +178,7 @@ workspace 4 output DP-0 eDP-1-1
 workspace 5 output DP-0 eDP-1-1
 
 # quick open
-set $mode_launcher Launch: [f]irefox [s]team s[p]otify [m]ail [o]bsidian [n]autilus
+set $mode_launcher Launch: [f]irefox [s]team s[p]otify [m]ail [o]bsidian
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
@@ -186,7 +187,6 @@ mode "$mode_launcher" {
   bindsym p exec kitty spt; mode "default" 
   bindsym m exec kitty neomutt; mode "default"   
   bindsym o exec obsidian; mode "default" 
-  bindsym n exec nautilus; mode "default" 
 
   bindsym Escape mode "default"
   bindsym Return mode "default"

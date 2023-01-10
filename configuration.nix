@@ -149,7 +149,6 @@
     clipmenu
     gnupg
     pinentry-curses
-    plasma-pa
     vim_configurable
     volctl
     wget
