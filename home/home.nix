@@ -81,7 +81,7 @@ in
     python310
     python310Packages.pip
     python310Packages.python-lsp-server
-    ripgrep-all
+    ripgrep
     spotify-tui
     spotifyd
     tmux
