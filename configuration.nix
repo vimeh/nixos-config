@@ -146,14 +146,10 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    cargo
     clipmenu
     gnupg
     pinentry-curses
     plasma-pa
-    rust-analyzer
-    rustc
-    rustup
     vim_configurable
     volctl
     wget

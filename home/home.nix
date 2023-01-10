@@ -61,7 +61,6 @@ in
     fd
     fzf
     flameshot
-    gcc
     git
     gnumake
     htop
@@ -89,6 +88,16 @@ in
     # PDF viewers; TODO choose one?
     evince
     zathura
+
+
+    # Rustdev
+    gcc
+    # llvmPackages_latest.libclang
+    # llvmPackages_latest.bintools
+    # llvmPackages_latest.lld
+    rustup
+    rust-analyzer
+    pkg-config
   ];
 
 
@@ -108,6 +117,9 @@ in
       cd = "z";
       open = "cd ~; xdg-open $(fzf)";
       o = "xdg-open $@";
+    };
+    sessionVariables = {
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
     };
     initExtra = ''
       cl() { z "$@" && ls; };
