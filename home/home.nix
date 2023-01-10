@@ -54,6 +54,7 @@ in
   };
 
   home.packages = with pkgs; [
+    teamviewer
     arandr
     btop
     calibre

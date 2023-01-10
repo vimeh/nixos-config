@@ -149,6 +149,7 @@
     clipmenu
     gnupg
     pinentry-curses
+    teamviewer
     vim_configurable
     volctl
     wget
@@ -184,6 +185,7 @@
       enable = true;
       ignoreIP = [ ];
     };
+    teamviewer.enable = true;
   };
 
   # Open ports in the firewall.
