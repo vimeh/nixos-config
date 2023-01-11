@@ -58,6 +58,8 @@ in
     arandr
     btop
     calibre
+    difftastic
+    exa
     firefox
     fd
     fzf
@@ -113,18 +115,22 @@ in
 
   programs.zsh = {
     enable = true;
+    dotDir = ".config/zsh";
+    enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
     shellAliases = {
-      ll = "ls -la";
-      cd = "z";
+      ll = "exa -la";
+      ls = "exa -a";
+      cd = "cl";
       open = "cd ~; xdg-open $(fzf)";
       o = "xdg-open $@";
+      clear = "printf '\n%.0s' {1..100}";
     };
     sessionVariables = {
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
     };
-    initExtra = ''
-      cl() { z "$@" && ls; };
-    '';
+    initExtraFirst = ''printf '\n%.0s' {1..100};'';
+    initExtra = ''cl() { z "$@" && exa -a; };'' + builtins.readFile ./p10k.zsh;
     history = {
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
@@ -132,9 +138,9 @@ in
     zplug = {
       enable = true;
       plugins = [
-        { name = "zsh-users/zsh-autosuggestions"; }
-        { name = "zsh-users/zsh-syntax-highlighting"; }
-        { name = "zsh-users/zsh-completions"; }
+        { name = "jeffreytse/zsh-vi-mode"; }
+        { name = "catppuccin/zsh-syntax-highlighting"; }
+        { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
       ];
     };
   };
