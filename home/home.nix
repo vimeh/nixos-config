@@ -123,13 +123,14 @@ in
     enableAutosuggestions = true;
     enableSyntaxHighlighting = true;
     shellAliases = {
-      ll = "exa -la";
-      ls = "exa -a";
       cd = "cl";
-      open = "cd ~; xdg-open $(fzf)";
-      o = "xdg-open $@";
       clear = "printf '\n%.0s' {1..100}";
       lg = "lazygit";
+      ll = "exa -la";
+      ls = "exa";
+      o = "xdg-open $@";
+      open = "cd ~; xdg-open $(fzf)";
+      tree = "exa --tree";
     };
     sessionVariables = {
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
@@ -141,6 +142,7 @@ in
       path = "${config.xdg.dataHome}/zsh/history";
     };
     zplug = {
+      zplugHome = "${config.xdg.configHome}/zsh/zplug";
       enable = true;
       plugins = [
         { name = "jeffreytse/zsh-vi-mode"; }
