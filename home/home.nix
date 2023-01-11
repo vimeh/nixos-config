@@ -129,6 +129,7 @@ in
       open = "cd ~; xdg-open $(fzf)";
       o = "xdg-open $@";
       clear = "printf '\n%.0s' {1..100}";
+      lg = "lazygit";
     };
     sessionVariables = {
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
