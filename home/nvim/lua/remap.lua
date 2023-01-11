@@ -3,22 +3,32 @@ local vnoremap = require("keymap").vnoremap
 local wk = require("which-key")
 
 -- Quality of life
+vim.keymap.set('i', 'jj', [[<esc>]])
 wk.register({
   name = "QoL",
   w = { "<cmd>w<cr>", "Save" },
   q = { "<cmd>q<cr>", "Quit" },
   -- x = { "<cmd>x<cr>", "Quit" },
   e = { "<cmd>Neotree toggle<cr>", "Explorer" },
-  gg = { "<cmd>LazyGit<cr>", "LazyGit" }
+  gg = { "<cmd>LazyGit<cr>", "LazyGit" },
+  t = { "<cmd>ToggleTerm<cr>", "Terminal" },
 }, { prefix = "<leader>" })
 
--- Navigating splits
-nnoremap("<C-J>", "<C-W><C-J>")
-nnoremap("<C-K>", "<C-W><C-K>")
-nnoremap("<C-L>", "<C-W><C-L>")
-nnoremap("<C-H>", "<C-W><C-H>")
+-- Windows
+local splits = require('smart-splits')
+-- moving between splits
+vim.keymap.set('n', '<C-h>', splits.move_cursor_left)
+vim.keymap.set('n', '<C-j>', splits.move_cursor_down)
+vim.keymap.set('n', '<C-k>', splits.move_cursor_up)
+vim.keymap.set('n', '<C-l>', splits.move_cursor_right)
+-- resizing splits
+vim.keymap.set('n', '<A-r>', splits.start_resize_mode)
+-- vim.keymap.set('n', '<A-h>', splits.resize_left)
+-- vim.keymap.set('n', '<A-j>', splits.resize_down)
+-- vim.keymap.set('n', '<A-k>', splits.resize_up)
+-- vim.keymap.set('n', '<A-l>', splits.resize_right)
+-- moving splits
 -- todo
--- ctrl+shift to resize splits. bettersplit plugin?
 
 -- Python Development
 nnoremap("<leader>r", "<cmd>!python3 %<CR>")
@@ -77,3 +87,17 @@ wk.register({
     l = { "cmd>TroubleToggle loclist<cr>", "Loclist" },
   },
 }, { prefix = "<leader>" })
+
+
+function _G.set_terminal_keymaps()
+  local opts = { buffer = 0 }
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+end
+
+-- if you only want these mappings for toggle term use term://*toggleterm#* instead
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')

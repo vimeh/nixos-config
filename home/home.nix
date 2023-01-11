@@ -1,7 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   pkgsUnstable = import <nixpkgs-unstable> { };
+  fromGitHub = ref: repo: pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "${lib.strings.sanitizeDerivationName repo}";
+    version = ref;
+    src = builtins.fetchGit {
+      url = "https://github.com/${repo}.git";
+      ref = ref;
+    };
+  };
 in
 {
 
@@ -218,6 +226,9 @@ in
       # filetree viewer
       neo-tree-nvim
 
+      # navigation
+      (fromGitHub "HEAD" "mrjones2014/smart-splits.nvim")
+
       # plugins set up here
       {
         plugin = gitsigns-nvim;
@@ -274,6 +285,11 @@ in
         plugin = trouble-nvim;
         type = "lua";
         config = "require('trouble').setup()";
+      }
+      {
+        plugin = toggleterm-nvim;
+        type = "lua";
+        config = "require('toggleterm').setup()";
       }
       lazygit-nvim
       markdown-preview-nvim
