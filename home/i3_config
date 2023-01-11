@@ -178,7 +178,7 @@ workspace 4 output DP-0 eDP-1-1
 workspace 5 output DP-0 eDP-1-1
 
 # quick open
-set $mode_launcher Launch: [f]irefox [s]team s[p]otify [m]ail [o]bsidian
+set $mode_launcher Launch: [f]irefox [s]team s[p]otify [m]ail [o]bsidian [n]vim
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
@@ -187,6 +187,7 @@ mode "$mode_launcher" {
   bindsym p exec kitty spt; mode "default" 
   bindsym m exec kitty neomutt; mode "default"   
   bindsym o exec obsidian; mode "default" 
+  bindsym n exec kitty nvim -c "lua require('telescope.builtin').oldfiles()"; mode "default" 
 
   bindsym Escape mode "default"
   bindsym Return mode "default"
