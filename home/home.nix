@@ -316,6 +316,10 @@ in
     '';
   };
 
+  services.spotifyd = {
+    enable = true;
+  };
+
 
 
 
