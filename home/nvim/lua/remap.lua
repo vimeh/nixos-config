@@ -22,15 +22,14 @@ vim.keymap.set('n', '<C-j>', splits.move_cursor_down)
 vim.keymap.set('n', '<C-k>', splits.move_cursor_up)
 vim.keymap.set('n', '<C-l>', splits.move_cursor_right)
 -- resizing splits
-vim.keymap.set('n', '<A-r>', splits.start_resize_mode)
--- vim.keymap.set('n', '<A-h>', splits.resize_left)
--- vim.keymap.set('n', '<A-j>', splits.resize_down)
--- vim.keymap.set('n', '<A-k>', splits.resize_up)
--- vim.keymap.set('n', '<A-l>', splits.resize_right)
+vim.keymap.set('n', '<C-S-r>', splits.start_resize_mode)
+vim.keymap.set('n', '<C-S-h>', splits.resize_left)
+vim.keymap.set('n', '<C-S-j>', splits.resize_down)
+vim.keymap.set('n', '<C-S-k>', splits.resize_up)
+vim.keymap.set('n', '<C-S-l>', splits.resize_right)
 -- moving splits
 require("winshift").setup()
-vim.keymap.set('n', '<A-m>', [[<cmd>WinShift<cr>]])
--- todo
+vim.keymap.set('n', '<C-S-m>', [[<cmd>WinShift<cr>]])
 
 -- Python Development
 nnoremap("<leader>r", "<cmd>!python3 %<CR>")
