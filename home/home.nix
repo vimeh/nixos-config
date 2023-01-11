@@ -99,6 +99,7 @@ in
     spotify-tui
     spotifyd
     tmux
+    xclip
 
     # PDF viewers; TODO choose one?
     evince

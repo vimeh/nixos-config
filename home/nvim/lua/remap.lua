@@ -12,6 +12,8 @@ wk.register({
   e = { "<cmd>Neotree toggle<cr>", "Explorer" },
   gg = { "<cmd>LazyGit<cr>", "LazyGit" },
   t = { "<cmd>ToggleTerm<cr>", "Terminal" },
+  y = { '"+y', "SystemCopy" },
+  p = { '"+p', "SystemPaste" },
 }, { prefix = "<leader>" })
 
 -- Windows
