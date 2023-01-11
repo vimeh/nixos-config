@@ -228,6 +228,7 @@ in
 
       # navigation
       (fromGitHub "HEAD" "mrjones2014/smart-splits.nvim")
+      (fromGitHub "HEAD" "sindrets/winshift.nvim")
 
       # plugins set up here
       {

@@ -28,6 +28,8 @@ vim.keymap.set('n', '<A-r>', splits.start_resize_mode)
 -- vim.keymap.set('n', '<A-k>', splits.resize_up)
 -- vim.keymap.set('n', '<A-l>', splits.resize_right)
 -- moving splits
+require("winshift").setup()
+vim.keymap.set('n', '<A-m>', [[<cmd>WinShift<cr>]])
 -- todo
 
 -- Python Development
