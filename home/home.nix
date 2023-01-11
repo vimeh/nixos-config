@@ -30,6 +30,10 @@ in
       "neomutt/neomuttrc".source = ./neomuttrc;
       "spotifyd/spotifyd.conf".source = ./spotifyd.conf;
       "spotify-tui/config.yml".source = ./spotify-tui.yml;
+      screenlayout = {
+        source = ./screenlayout;
+        recursive = true;
+      };
     };
     mimeApps = {
       enable = true;

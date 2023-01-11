@@ -197,7 +197,7 @@ set $mode_screens Screens
 bindsym $mod+Shift+f mode "$mode_screens"
 
 mode "$mode_screens" {
-  set $screens_dir /home/vinay/.screenlayout
+  set $screens_dir /home/vinay/.config/screenlayout
   bindsym 1 exec $screens_dir/focus; mode "default" 
   bindsym 2 exec $screens_dir/twoscreen; mode "default" 
   bindsym 3 exec $screens_dir/threescreen; mode "default" 
