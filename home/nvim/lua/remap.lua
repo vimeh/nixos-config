@@ -1,5 +1,3 @@
-local nnoremap = require("keymap").nnoremap
-local vnoremap = require("keymap").vnoremap
 local wk = require("which-key")
 
 -- Quality of life
@@ -12,7 +10,7 @@ wk.register({
   e = { "<cmd>Neotree toggle<cr>", "Explorer" },
   gg = { "<cmd>LazyGit<cr>", "LazyGit" },
   t = { "<cmd>ToggleTerm<cr>", "Terminal" },
-  y = { '"+y', "SystemCopy" },
+  y = { '"+y', "SystemCopy", mode = "v" },
   p = { '"+p', "SystemPaste" },
 }, { prefix = "<leader>" })
 
@@ -34,17 +32,14 @@ require("winshift").setup()
 vim.keymap.set('n', '<C-S-m>', [[<cmd>WinShift<cr>]])
 
 -- Python Development
-nnoremap("<leader>r", "<cmd>!python3 %<CR>")
-nnoremap("<leader>d", "<cmd>bd!<CR>")
-
--- Rust Development
--- nnoremap("<leader>s", "<cmd>%! rustfmt<CR>")
+vim.keymap.set("n", "<leader>r", "<cmd>!python3 %<CR>")
+vim.keymap.set("n", "<leader>d", "<cmd>bd!<CR>")
 
 -- Clear highlighting
-nnoremap("<leader>,", "<cmd>noh<CR>")
+vim.keymap.set("n", "<leader>,", "<cmd>noh<CR>")
 
 -- System copy
-vnoremap("<leader>c", '"+y<CR>')
+vim.keymap.set("v", "<leader>c", '"+y<CR>')
 
 -- Telescope
 local telescope = require("telescope.builtin")
@@ -57,6 +52,11 @@ wk.register({
     d = { telescope.live_grep, "Live Grep" },
     b = { telescope.buffers, "Buffers" },
     h = { telescope.help_tags, "Help Tags" },
+    n = {
+      n = { "<cmd>enew<cr>", "New editor" },
+      s = { "<cmd>split<cr>", "New editor hsplit" },
+      S = { "<cmd>vsplit<cr>", "New editor vsplit" },
+    },
   },
 }, { prefix = "<leader>" })
 
@@ -91,6 +91,17 @@ wk.register({
   },
 }, { prefix = "<leader>" })
 
+-- LSP
+wk.register({
+  K = { vim.lsp.buf.hover, "Hover" },
+  g = {
+    name = "Goto",
+    d = { vim.lsp.buf.definition, "Definition" },
+    D = { vim.lsp.buf.declaration, "Declaration" },
+    I = { vim.lsp.buf.implementation, "Implementation" },
+    r = { vim.lsp.buf.references, "References" },
+  },
+}, { prefix = "<leader>" })
 
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }

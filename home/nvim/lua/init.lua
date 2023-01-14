@@ -1,5 +1,4 @@
 require("set")
-require("keymap")
 require("remap")
 require("config-color")
 require("config-formatter")
