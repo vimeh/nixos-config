@@ -14,7 +14,9 @@
   sound.mediaKeys.enable = true;
 
   # hardware
-  hardware.openrazer.enable = true;
+  hardware.openrazer = {
+    enable = true;
+  };
 
   # for i3
   environment.pathsToLink = [ "/libexec" ];

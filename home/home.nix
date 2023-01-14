@@ -38,8 +38,9 @@ in
       "neomutt/neomuttrc".source = ./neomuttrc;
       "spotifyd/spotifyd.conf".source = ./spotifyd.conf;
       "spotify-tui/config.yml".source = ./spotify-tui.yml;
-      screenlayout = {
-        source = ./screenlayout;
+      screenlayout.source = ./screenlayout;
+      openrazer = {
+        source = ./openrazer;
         recursive = true;
       };
     };
@@ -71,6 +72,7 @@ in
     btop
     calibre
     difftastic
+    entr
     exa
     firefox
     fd
@@ -87,6 +89,8 @@ in
     obsidian
     openssl
     pamixer
+    pandoc
+    texlive.combined.scheme-full
     (pass.withExtensions (ext: with ext;
     [
       pass-otp
@@ -98,7 +102,9 @@ in
     ripgrep
     spotify-tui
     spotifyd
+    sshfs
     tmux
+    unzip
     xclip
 
     # PDF viewers; TODO choose one?
@@ -108,12 +114,16 @@ in
 
     # Rustdev
     gcc
-    # llvmPackages_latest.libclang
+    llvmPackages_latest.libclang
     # llvmPackages_latest.bintools
     # llvmPackages_latest.lld
     rustup
     rust-analyzer
     pkg-config
+
+    # tasks
+    taskwarrior
+    taskwarrior-tui
   ];
 
 
@@ -188,12 +198,24 @@ in
     enable = true;
     userName = "Vinay Mehta";
     userEmail = "vinaymehta.nyc@gmail.com";
+    signing = {
+      key = "7BFD93BA3C710416";
+      signByDefault = true;
+    };
+    extraConfig = {
+      init.defaultBranch = "main";
+      core.editor = "nvim";
+      diff.tool = "vimdiff";
+      merge.tool = "vimdiff";
+      difftool.prompt = false;
+    };
   };
 
   programs.neovim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
+    vimdiffAlias = true;
     plugins = with pkgs.vimPlugins; [
       # plugins set up in nvim/
       # color.lua
