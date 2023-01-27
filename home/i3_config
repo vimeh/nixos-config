@@ -9,9 +9,9 @@ font pango:Liga SFMono Nerd Font 18
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Start system tray applets
-exec blueman-applet
+exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
-exec volctl
+exec --no-startup-id volctl
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -232,3 +232,10 @@ client.background       #ffffff
 # remove window titles
 for_window [class="^.*"] border pixel 1
 
+# keyboard controls
+bindcode 225 exec /run/current-system/sw/bin/pamixer -d 100
+bindcode 172 exec /run/current-system/sw/bin/pamixer -d 5 
+bindcode 121 exec /run/current-system/sw/bin/pamixer -i 5
+
+bindcode 232 exec /run/current-system/sw/bin/light -U 10 
+bindcode 233 exec /run/current-system/sw/bin/light -A 10 

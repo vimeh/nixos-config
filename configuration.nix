@@ -27,7 +27,6 @@
   # bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  sound.mediaKeys.enable = true;
 
   # hardware
   hardware.openrazer = {
@@ -68,7 +67,6 @@
   boot.initrd.luks.devices."luks-42359df3-4249-4611-a212-26f9c3178af1".keyFile = "/crypto_keyfile.bin";
 
   networking.hostName = "tb"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -131,17 +129,12 @@
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
-  # hardware.pulseaudio.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -166,6 +159,7 @@
   environment.systemPackages = with pkgs; [
     clipmenu
     gnupg
+    pamixer
     pinentry-curses
     teamviewer
     vim_configurable
@@ -196,7 +190,7 @@
     openssh = {
       enable = true;
       permitRootLogin = "prohibit-password";
-      # passwordAuthentication = false;
+      passwordAuthentication = false;
       # allowSFTP = false;
     };
     fail2ban = {
@@ -205,12 +199,6 @@
     };
     teamviewer.enable = true;
   };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   system.stateVersion = "22.11";
 
@@ -223,20 +211,8 @@
   # light media keys
   programs.light.enable = true;
 
-  services.actkbd = {
-    enable = true;
-    bindings = [
-      { keys = [ 225 ]; events = [ "key" ]; command = "pamixer -d 100"; }
-      { keys = [ 172 ]; events = [ "key" ]; command = "pamixer -d 5"; }
-      { keys = [ 121 ]; events = [ "key" ]; command = "pamixer -i 5"; }
-      # TODO: might need sudo / group access here?
-      { keys = [ 232 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-      { keys = [ 233 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
-    ];
   fonts = {
     fonts = with pkgs; [ nerdfonts sf-mono-liga-bin ];
   };
-
-  fonts.fonts = [ pkgs.nerdfonts ];
 
 }
