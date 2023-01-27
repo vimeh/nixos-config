@@ -220,7 +220,8 @@ in
       # plugins set up in nvim/
       # color.lua
       catppuccin-nvim
-      feline-nvim
+      lualine-nvim
+      twilight-nvim
 
       # telescope.lua
       telescope-nvim
@@ -251,7 +252,6 @@ in
 
       # navigation
       (fromGitHub "HEAD" "mrjones2014/smart-splits.nvim")
-      (fromGitHub "HEAD" "sindrets/winshift.nvim")
 
       # plugins set up here
       {
@@ -315,13 +315,21 @@ in
         type = "lua";
         config = "require('toggleterm').setup()";
       }
+      {
+        plugin = (fromGitHub "HEAD" "folke/persistence.nvim");
+        type = "lua";
+        config = "require('persistence').setup()";
+      }
       lazygit-nvim
       markdown-preview-nvim
       nvim-web-devicons
+      (fromGitHub "HEAD" "shortcuts/no-neck-pain.nvim")
+      zen-mode-nvim
 
     ] ++ [
       pkgsUnstable.vimPlugins.copilot-lua
       pkgsUnstable.vimPlugins.copilot-cmp
+      pkgsUnstable.vimPlugins.winshift-nvim
     ];
     extraPackages = with pkgs; [
       black

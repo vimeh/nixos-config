@@ -16,6 +16,8 @@ vim.opt.smartindent = true
 vim.opt.smarttab = true
 
 vim.opt.wrap = true
+vim.opt.breakindent = true
+vim.opt.linebreak = true
 
 vim.g.mapleader = " "
 
@@ -36,7 +38,9 @@ vim.opt.signcolumn = "yes:2"
 vim.opt.swapfile = false
 vim.opt.backup = false
 
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 12
 vim.opt.updatetime = 50
 
 vim.opt.clipboard = "unnamedplus"
+
+vim.opt.autowriteall = true

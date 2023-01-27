@@ -13,6 +13,8 @@ wk.register({
   y = { '"+y', "SystemCopy", mode = "v" },
   p = { '"+p', "SystemPaste" },
 }, { prefix = "<leader>" })
+-- Clear highlighting
+vim.keymap.set("n", "<leader>,", "<cmd>noh<CR>")
 
 -- Windows
 local splits = require('smart-splits')
@@ -21,6 +23,10 @@ vim.keymap.set('n', '<C-h>', splits.move_cursor_left)
 vim.keymap.set('n', '<C-j>', splits.move_cursor_down)
 vim.keymap.set('n', '<C-k>', splits.move_cursor_up)
 vim.keymap.set('n', '<C-l>', splits.move_cursor_right)
+vim.keymap.set('v', '<C-h>', splits.move_cursor_left)
+vim.keymap.set('v', '<C-j>', splits.move_cursor_down)
+vim.keymap.set('v', '<C-k>', splits.move_cursor_up)
+vim.keymap.set('v', '<C-l>', splits.move_cursor_right)
 -- resizing splits
 vim.keymap.set('n', '<C-S-r>', splits.start_resize_mode)
 vim.keymap.set('n', '<C-S-h>', splits.resize_left)
@@ -30,16 +36,10 @@ vim.keymap.set('n', '<C-S-l>', splits.resize_right)
 -- moving splits
 require("winshift").setup()
 vim.keymap.set('n', '<C-S-m>', [[<cmd>WinShift<cr>]])
-
--- Python Development
-vim.keymap.set("n", "<leader>r", "<cmd>!python3 %<CR>")
-vim.keymap.set("n", "<leader>d", "<cmd>bd!<CR>")
-
--- Clear highlighting
-vim.keymap.set("n", "<leader>,", "<cmd>noh<CR>")
-
--- System copy
-vim.keymap.set("v", "<leader>c", '"+y<CR>')
+-- Center buffer
+wk.register({
+  c = { "<cmd>ZenMode<cr>", "Zen Mode" },
+}, { prefix = "<leader>" })
 
 -- Telescope
 local telescope = require("telescope.builtin")
@@ -53,6 +53,7 @@ wk.register({
     b = { telescope.buffers, "Buffers" },
     h = { telescope.help_tags, "Help Tags" },
     n = {
+      name = "New file",
       n = { "<cmd>enew<cr>", "New editor" },
       s = { "<cmd>split<cr>", "New editor hsplit" },
       S = { "<cmd>vsplit<cr>", "New editor vsplit" },
@@ -96,6 +97,7 @@ wk.register({
   K = { vim.lsp.buf.hover, "Hover" },
   g = {
     name = "Goto",
+    h = { vim.lsp.buf.hover, "Hover" },
     d = { vim.lsp.buf.definition, "Definition" },
     D = { vim.lsp.buf.declaration, "Declaration" },
     I = { vim.lsp.buf.implementation, "Implementation" },
@@ -115,3 +117,12 @@ end
 
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+
+-- Persistence
+wk.register({
+  q = {
+    name = "Persistence",
+    s = { "<cmd>lua require('persistence').load()<cr>", "Restore for cwd" },
+    l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+  }
+})
