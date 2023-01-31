@@ -1,22 +1,6 @@
 { config, pkgs, lib, callPackage, ... }:
 
 {
-  nixpkgs.overlays = [
-    (final: prev: {
-      sf-mono-liga-bin = prev.stdenvNoCC.mkDerivation rec {
-        pname = "sf-mono-liga-bin";
-        version = "dev";
-        src = builtins.fetchGit {
-          url = "https://github.com/shaunsingh/SFMono-Nerd-Font-Ligaturized.git";
-        };
-        dontConfigure = true;
-        installPhase = ''
-          mkdir -p $out/share/fonts/opentype
-          cp -R $src/*.otf $out/share/fonts/opentype/
-        '';
-      };
-    })
-  ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports =
     [
@@ -212,7 +196,10 @@
   programs.light.enable = true;
 
   fonts = {
-    fonts = with pkgs; [ nerdfonts sf-mono-liga-bin ];
+    fonts = with pkgs; [
+      nerdfonts
+      (iosevka-bin.override { variant = "etoile"; })
+    ];
   };
 
 }
