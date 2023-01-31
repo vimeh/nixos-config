@@ -81,6 +81,7 @@ in
       defaultApplications = {
         "application/pdf" = [ "org.pwmt.zathura.desktop" ];
         "text/plain" = [ "nvim.desktop" ];
+        "text/html" = [ "firefox.desktop" ];
       };
     };
   };
@@ -95,22 +96,32 @@ in
   };
 
   home.packages = with pkgs; [
-    teamviewer
+    appimage-run
     arandr
+    bat
     btop
     calibre
     difftastic
+    du-dust
     entr
     exa
-    firefox
     fd
-    fzf
+    fd
+    firefox
     flameshot
+    fzf
+    gcalcli
+    gimp
     git
     gnumake
+    go
+    gparted
     htop
+    hyperfine
     kitty
     lazygit
+    libreoffice
+    neofetch
     neomutt
     nil
     nodejs-16_x
@@ -118,24 +129,30 @@ in
     openssl
     pamixer
     pandoc
-    texlive.combined.scheme-full
+    prusa-slicer
+    sd
+    teamviewer
+    tokei
+    zoom-us
     (pass.withExtensions (ext: with ext;
     [
       pass-otp
     ]))
     pasystray
     python310
-    python310Packages.pip
     python310Packages.python-lsp-server
+    python310Packages.virtualenvwrapper
     ripgrep
     spotify-tui
     spotifyd
     sshfs
+    texlive.combined.scheme-full
     tmux-sessionizer
     unzip
+    vlc
     xclip
 
-    # PDF viewers; TODO choose one?
+    # PDF viewers
     evince
     zathura
 
@@ -148,6 +165,8 @@ in
     rustup
     rust-analyzer
     pkg-config
+    poetry
+    graphviz
 
     # tasks
     taskwarrior
@@ -182,6 +201,7 @@ in
     };
     sessionVariables = {
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+      PATH = "$PATH:/home/vinay/src/bin";
     };
     initExtraFirst = ''printf '\n%.0s' {1..100};'';
     initExtra = ''cl() { z "$@" && exa -a; };
