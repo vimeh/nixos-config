@@ -276,6 +276,7 @@ in
     vimdiffAlias = true;
     plugins = with pkgs.vimPlugins; [
       # plugins set up in nvim/
+      impatient-nvim
       # color.lua
       catppuccin-nvim
       lualine-nvim
@@ -293,6 +294,7 @@ in
       nvim-treesitter.withAllGrammars
       playground
       nvim-navic
+
       # Completions
       cmp-buffer
       cmp-cmdline
@@ -317,9 +319,9 @@ in
         plugin = gitsigns-nvim;
         type = "lua";
         config = "require('gitsigns').setup({
-      sign_priority = 0,
-      })
-      ";
+        sign_priority = 0,
+        })
+        ";
       }
       {
         plugin = which-key-nvim;
@@ -355,9 +357,9 @@ in
         plugin = indent-blankline-nvim;
         type = "lua";
         config = "require('indent_blankline').setup({
-      show_current_context = true,
-      show_current_context_start = true,
-      })";
+        show_current_context = true,
+        show_current_context_start = true,
+        })";
       }
       {
         plugin = nvim-lastplace;
@@ -401,6 +403,7 @@ in
       pkgsUnstable.vimPlugins.winshift-nvim
     ];
     extraPackages = with pkgs; [
+      pgformatter
       black
       nixpkgs-fmt
       nodePackages.bash-language-server

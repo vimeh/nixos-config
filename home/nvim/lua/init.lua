@@ -1,3 +1,4 @@
+require("impatient")
 require("set")
 require("remap")
 require("config-color")
