@@ -7,7 +7,7 @@ wk.register({
   w = { "<cmd>w<cr>", "Save" },
   q = { "<cmd>q<cr>", "Quit" },
   -- x = { "<cmd>x<cr>", "Quit" },
-  e = { "<cmd>Neotree toggle<cr>", "Explorer" },
+  e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   gg = { "<cmd>LazyGit<cr>", "LazyGit" },
   t = { "<cmd>ToggleTerm<cr>", "Terminal" },
   y = { '"+y', "SystemCopy", mode = "v" },

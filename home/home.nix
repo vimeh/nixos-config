@@ -305,9 +305,6 @@ in
       # formatter.lua
       neoformat
 
-      # filetree viewer
-      neo-tree-nvim
-
       # navigation
       (fromGitHub "HEAD" "mrjones2014/smart-splits.nvim")
 
@@ -378,7 +375,17 @@ in
         type = "lua";
         config = "require('persistence').setup()";
       }
-      lazygit-nvim
+      {
+        plugin = nvim-tree-lua;
+        type = "lua";
+        config = "require('nvim-tree').setup({
+              update_focused_file = {
+                enable = true,
+                update_cwd = true,
+                update_root = true,
+              },
+            })";
+      }
       markdown-preview-nvim
       nvim-web-devicons
       (fromGitHub "HEAD" "shortcuts/no-neck-pain.nvim")
