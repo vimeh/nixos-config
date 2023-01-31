@@ -10,6 +10,34 @@ let
       ref = ref;
     };
   };
+
+  tmux-sessionizer = pkgs.writeShellScriptBin "tmux-sessionizer" ''
+    # https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer
+
+    if [[ $# -eq 1 ]]; then
+        selected=$1
+    else
+        selected=$(fd . /home/vinay/code --min-depth 1 --max-depth 1 -t d | fzf | sed 's:/*$::')
+    fi
+
+    if [[ -z $selected ]]; then
+        exit 0
+    fi
+
+    selected_name=$(basename "$selected" | tr . _)
+    tmux_running=$(pgrep tmux)
+
+    if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+        tmux new-session -s $selected_name -c $selected
+        exit 0
+    fi
+
+    if ! tmux has-session -t=$selected_name 2> /dev/null; then
+        tmux new-session -ds $selected_name -c $selected
+    fi
+
+    tmux switch-client -t $selected_name
+  '';
 in
 {
 
@@ -103,7 +131,7 @@ in
     spotify-tui
     spotifyd
     sshfs
-    tmux
+    tmux-sessionizer
     unzip
     xclip
 
@@ -150,12 +178,15 @@ in
       o = "xdg-open $@";
       open = "cd ~; xdg-open $(fzf)";
       tree = "exa --tree";
+      ts = "tmux-sessionizer";
     };
     sessionVariables = {
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
     };
     initExtraFirst = ''printf '\n%.0s' {1..100};'';
-    initExtra = ''cl() { z "$@" && exa -a; };'' + builtins.readFile ./p10k.zsh;
+    initExtra = ''cl() { z "$@" && exa -a; };
+                  if [ "$TMUX" = "" ]; then tmux; fi;
+                '' + builtins.readFile ./p10k.zsh;
     history = {
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
@@ -176,22 +207,49 @@ in
     shortcut = "a";
     keyMode = "vi";
     newSession = true;
-    # escapeTime = 0;
+    escapeTime = 0;
     secureSocket = false;
+    terminal = "tmux-256color";
     extraConfig = ''
-      bind-key -n M-s split-window -v
-      bind-key -n M-S split-window -h
+      # extend vim-tmux-navigator for pane resizing
+      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+          | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'"
+      bind-key -n C-S-h if-shell "$is_vim" 'send-keys C-S-h' 'resize-pane -L 3'
+      bind-key -n C-S-j if-shell "$is_vim" 'send-keys C-S-j' 'resize-pane -D 3'
+      bind-key -n C-S-k if-shell "$is_vim" 'send-keys C-S-k' 'resize-pane -U 3'
+      bind-key -n C-S-l if-shell "$is_vim" 'send-keys C-S-l' 'resize-pane -R 3'
+      bind-key -T copy-mode-vi 'C-S-h' resize-pane -L 3  
+      bind-key -T copy-mode-vi 'C-S-j' resize-pane -D 3
+      bind-key -T copy-mode-vi 'C-S-k' resize-pane -U 3
+      bind-key -T copy-mode-vi 'C-S-l' resize-pane -R 3
 
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
-
-      bind-key -n M-h select-pane -L
-      bind-key -n M-j select-pane -D
-      bind-key -n M-k select-pane -U
-      bind-key -n M-l select-pane -R
+      # some QoL
+      set-option -g allow-rename off
+      set -g mouse on
+      bind r source-file ~/.config/tmux/tmux.conf
+      bind-key -n M-S split-window -v
+      bind-key -n M-s split-window -h
     '';
+    plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-strategy-nvim 'session'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '15'
+        '';
+      }
+      tmux-fzf
+      prefix-highlight
+      yank
+      nord
+      vim-tmux-navigator
+    ];
   };
 
   programs.git = {
