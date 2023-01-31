@@ -286,10 +286,12 @@ in
       harpoon
 
       # lsp.lua
+      rust-tools-nvim
       nvim-lspconfig
       nvim-treesitter-refactor
       nvim-treesitter-textobjects
       nvim-treesitter.withAllGrammars
+      playground
       nvim-navic
       # Completions
       cmp-buffer

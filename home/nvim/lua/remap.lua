@@ -114,18 +114,6 @@ wk.register({
   },
 }, { prefix = "<leader>" })
 
--- LSP
-wk.register({
-  K = { vim.lsp.buf.hover, "Hover" },
-  g = {
-    name = "Goto",
-    h = { vim.lsp.buf.hover, "Hover" },
-    d = { vim.lsp.buf.definition, "Definition" },
-    D = { vim.lsp.buf.declaration, "Declaration" },
-    I = { vim.lsp.buf.implementation, "Implementation" },
-    r = { vim.lsp.buf.references, "References" },
-  },
-}, { prefix = "<leader>" })
 
 -- Persistence
 wk.register({

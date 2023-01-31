@@ -19,7 +19,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.rs" },
-  callback = function() vim.cmd("Neoformat") end
+  callback = function()
+    vim.lsp.buf.format({ timeout_ms = 200 })
+  end,
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
