@@ -290,6 +290,7 @@ in
       nvim-treesitter-refactor
       nvim-treesitter-textobjects
       nvim-treesitter.withAllGrammars
+      nvim-navic
       # Completions
       cmp-buffer
       cmp-cmdline
@@ -307,6 +308,7 @@ in
 
       # navigation
       (fromGitHub "HEAD" "mrjones2014/smart-splits.nvim")
+      (fromGitHub "HEAD" "utilyre/barbecue.nvim")
 
       # plugins set up here
       {
