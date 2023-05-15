@@ -197,8 +197,12 @@
 
   fonts = {
     fonts = with pkgs; [
-      nerdfonts
-      (iosevka-bin.override { variant = "etoile"; })
+      (nerdfonts.override {
+        fonts = [ "Iosevka" ];
+      })
+      (iosevka-bin.override {
+        variant = "etoile";
+      })
     ];
   };
 

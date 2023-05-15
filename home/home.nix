@@ -47,7 +47,6 @@ in
       download = "${config.home.homeDirectory}/temp";
     };
     configFile = {
-      "kitty/kitty.conf".source = ./kitty.conf;
       nvim = {
         source = ./nvim;
         recursive = true;
@@ -58,6 +57,7 @@ in
       "neomutt/neomuttrc".source = ./neomuttrc;
       "spotifyd/spotifyd.conf".source = ./spotifyd.conf;
       "spotify-tui/config.yml".source = ./spotify-tui.yml;
+      "wezterm/wezterm.lua".source = ./wezterm.lua;
       screenlayout.source = ./screenlayout;
       openrazer = {
         source = ./openrazer;
