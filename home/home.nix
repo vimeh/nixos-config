@@ -2,14 +2,6 @@
 
 let
   pkgsUnstable = import <nixpkgs-unstable> { };
-  fromGitHub = ref: repo: pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "${lib.strings.sanitizeDerivationName repo}";
-    version = ref;
-    src = builtins.fetchGit {
-      url = "https://github.com/${repo}.git";
-      ref = ref;
-    };
-  };
 
   tmux-sessionizer = pkgs.writeShellScriptBin "tmux-sessionizer" ''
     # https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer
@@ -171,7 +163,12 @@ in
     # tasks
     taskwarrior
     taskwarrior-tui
-  ];
+  ] ++
+  [
+    pkgsUnstable.neovim
+    pkgsUnstable.wezterm
+  ]
+  ;
 
 
   programs = {
@@ -287,156 +284,6 @@ in
       merge.tool = "vimdiff";
       difftool.prompt = false;
     };
-  };
-
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-    plugins = with pkgs.vimPlugins; [
-      # plugins set up in nvim/
-      impatient-nvim
-      # color.lua
-      catppuccin-nvim
-      lualine-nvim
-      twilight-nvim
-
-      # telescope.lua
-      telescope-nvim
-      harpoon
-
-      # lsp.lua
-      rust-tools-nvim
-      nvim-lspconfig
-      nvim-treesitter-refactor
-      nvim-treesitter-textobjects
-      nvim-treesitter.withAllGrammars
-      playground
-      nvim-navic
-
-      # Completions
-      cmp-buffer
-      cmp-cmdline
-      cmp-nvim-lsp
-      cmp-nvim-lsp-signature-help
-      cmp-path
-      lspkind-nvim
-      nvim-cmp
-      # Snippets
-      luasnip
-      cmp_luasnip
-
-      # formatter.lua
-      neoformat
-
-      # navigation
-      (fromGitHub "HEAD" "mrjones2014/smart-splits.nvim")
-      (fromGitHub "HEAD" "utilyre/barbecue.nvim")
-
-      # plugins set up here
-      {
-        plugin = gitsigns-nvim;
-        type = "lua";
-        config = "require('gitsigns').setup({
-        sign_priority = 0,
-        })
-        ";
-      }
-      {
-        plugin = which-key-nvim;
-        type = "lua";
-        config = "require('which-key').setup()";
-      }
-      {
-        plugin = nvim-autopairs;
-        type = "lua";
-        config = "require('nvim-autopairs').setup()";
-      }
-      {
-        plugin = nvim-surround;
-        type = "lua";
-        config = "require('nvim-surround').setup()";
-      }
-      {
-        plugin = comment-nvim;
-        type = "lua";
-        config = "require('Comment').setup()";
-      }
-      {
-        plugin = leap-nvim;
-        type = "lua";
-        config = "require('leap').add_default_mappings()";
-      }
-      {
-        plugin = fidget-nvim;
-        type = "lua";
-        config = "require('fidget').setup()";
-      }
-      {
-        plugin = indent-blankline-nvim;
-        type = "lua";
-        config = "require('indent_blankline').setup({
-        show_current_context = true,
-        show_current_context_start = true,
-        })";
-      }
-      {
-        plugin = nvim-lastplace;
-        type = "lua";
-        config = "require('nvim-lastplace').setup()";
-      }
-      {
-        plugin = trouble-nvim;
-        type = "lua";
-        config = "require('trouble').setup()";
-      }
-      {
-        plugin = toggleterm-nvim;
-        type = "lua";
-        config = "require('toggleterm').setup()";
-      }
-      {
-        plugin = (fromGitHub "HEAD" "folke/persistence.nvim");
-        type = "lua";
-        config = "require('persistence').setup()";
-      }
-      {
-        plugin = nvim-tree-lua;
-        type = "lua";
-        config = "require('nvim-tree').setup({
-              update_focused_file = {
-                enable = true,
-                update_cwd = true,
-                update_root = true,
-              },
-            })";
-      }
-      markdown-preview-nvim
-      nvim-web-devicons
-      (fromGitHub "HEAD" "shortcuts/no-neck-pain.nvim")
-      zen-mode-nvim
-
-    ] ++ [
-      pkgsUnstable.vimPlugins.copilot-lua
-      pkgsUnstable.vimPlugins.copilot-cmp
-      pkgsUnstable.vimPlugins.winshift-nvim
-    ];
-    extraPackages = with pkgs; [
-      pgformatter
-      black
-      nixpkgs-fmt
-      nodePackages.bash-language-server
-      nodePackages.vscode-langservers-extracted
-      nodePackages.yaml-language-server
-      pyright
-      rnix-lsp
-      sumneko-lua-language-server
-      tree-sitter
-    ];
-    extraConfig = ''
-      :luafile ~/.config/nvim/lua/init.lua
-    '';
   };
 
   services.spotifyd = {
