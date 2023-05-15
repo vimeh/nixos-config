@@ -141,6 +141,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    appimage-run
     clipmenu
     gnupg
     pamixer
@@ -150,6 +151,8 @@
     volctl
     wget
     xorg.xev
+    v4l-utils
+    libv4l
   ];
   environment.shells = with pkgs; [ zsh ];
   environment.variables.EDITOR = "nvim";
@@ -205,5 +208,49 @@
       })
     ];
   };
+
+  services.borgbackup.jobs =
+    let
+      common-excludes = [
+        "code/nixpkgs"
+        "code/openai-whisper-realtime"
+        ".cache"
+        ".rustup"
+        ".local/share/Steam"
+        "code/*/target"
+        "mnt"
+      ];
+      basicBackup = name: {
+        paths = [ "/home" ];
+        environment.BORG_RSH = "ssh -i /root/borgbackup/ssh_key";
+        compression = "auto,lzma";
+        startAt = "daily";
+        exclude = map (x: "/home/*/" + x) common-excludes;
+      };
+    in
+    {
+      kipling = basicBackup "kipling" // rec {
+        repo = "pi@nas.local:/tank/media/backups/tb";
+        encryption = {
+          mode = "repokey-blake2";
+          passCommand = "cat /root/borgbackup/passphrase";
+        };
+      };
+      rsync-net = basicBackup "rsync" // rec {
+        repo = "de2494@de2494.rsync.net:borg_tb";
+        encryption = {
+          mode = "repokey-blake2";
+          passCommand = "cat /root/borgbackup_rsync.net/passphrase";
+        };
+        extraArgs = "--remote-path=borg1";
+      };
+    };
+
+  /* networking.wg-quick.interfaces = {
+        wg0 = {
+      configFile = builtins.readFile ./wg0.conf;
+        };
+      }; */
+
 
 }

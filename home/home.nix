@@ -35,6 +35,7 @@ in
         source = ./openrazer;
         recursive = true;
       };
+      "starship.toml".source = ./starship.toml;
     };
     mimeApps = {
       enable = true;
@@ -138,6 +139,7 @@ in
   [
     pkgsUnstable.neovim
     pkgsUnstable.wezterm
+    pkgsUnstable.starship
   ]
   ;
 
@@ -173,6 +175,7 @@ in
     initExtraFirst = ''printf '\n%.0s' {1..100};'';
     initExtra = ''
       cl() { z "$@" && exa -a; };
+      eval "$(starship init zsh)"
     '';
     history = {
       size = 10000;
@@ -184,7 +187,6 @@ in
       plugins = [
         { name = "jeffreytse/zsh-vi-mode"; }
         { name = "catppuccin/zsh-syntax-highlighting"; }
-        { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
       ];
     };
   };
