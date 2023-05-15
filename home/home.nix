@@ -6,6 +6,7 @@ in
 {
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.cudaSupport = true;
   home.username = "vinay";
   home.homeDirectory = "/home/vinay";
 
@@ -66,6 +67,7 @@ in
     bat
     btop
     calibre
+    cudaPackages.cudatoolkit
     difftastic
     du-dust
     entr
