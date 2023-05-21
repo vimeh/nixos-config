@@ -4,6 +4,7 @@ let
   pkgsUnstable = import <nixpkgs-unstable> { };
 in
 {
+  nixpkgs.config.permittedInsecurePackages = [ " electron-18 .1 .0 " ];
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport = true;
@@ -62,11 +63,11 @@ in
   };
 
   home.packages = with pkgs; [
-    appimage-run
     yuzu-mainline
     openjdk
     arandr
     bat
+    barrier
     btop
     calibre
     cudaPackages.cudatoolkit
@@ -82,12 +83,12 @@ in
     gcalcli
     gimp
     git
+    gnome.cheese
     gnumake
     go
     gparted
     htop
     hyperfine
-    kitty
     lazygit
     libreoffice
     neofetch
@@ -99,9 +100,12 @@ in
     pamixer
     pandoc
     prusa-slicer
+    kicad
     sd
     teamviewer
     tokei
+    ungoogled-chromium
+    watchexec
     zoom-us
     (pass.withExtensions (ext: with ext;
     [
@@ -112,13 +116,18 @@ in
     python310Packages.python-lsp-server
     python310Packages.virtualenvwrapper
     ripgrep
+    rofi-pass
     spotify-tui
     spotifyd
     sshfs
     texlive.combined.scheme-full
+    unclutter-xfixes
     unzip
     vlc
+    wireguard-go
     xclip
+    xkcdpass
+    zbar
 
     # PDF viewers
     evince
@@ -139,6 +148,8 @@ in
     # tasks
     taskwarrior
     taskwarrior-tui
+
+    linuxHeaders
   ] ++
   [
     pkgsUnstable.neovim
@@ -155,13 +166,23 @@ in
       enable = true;
       enableZshIntegration = true;
     };
+    bottom.enable = true;
   };
 
   programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
-    enableAutosuggestions = true;
+    enableAutosuggestions = false;
     enableSyntaxHighlighting = true;
+    enableCompletion = true;
+    completionInit = ''
+      autoload -Uz compinit
+      if [ $(expr $(date +%s) - 86400) -gt $(stat -c %Z $ZDOTDIR/.zcompdump) ]; then
+        compinit
+      else
+        compinit -C
+      fi
+    '';
     shellAliases = {
       cd = "cl";
       clear = "printf '\n%.0s' {1..100}";
@@ -171,12 +192,15 @@ in
       o = "xdg-open $@";
       open = "cd ~; xdg-open $(fzf)";
       tree = "exa --tree";
+      vim = "nvim";
     };
     sessionVariables = {
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
       PATH = "$PATH:/home/vinay/src/bin";
+      LIBCLANG_PATH = "${pkgs.llvmPackages_latest.libclang.lib}/lib";
+      LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${pkgs.v4l-utils}/lib:${pkgs.linuxHeaders}/include";
+
     };
-    initExtraFirst = ''printf '\n%.0s' {1..100};'';
     initExtra = ''
       cl() { z "$@" && exa -a; };
       eval "$(starship init zsh)"
@@ -191,6 +215,8 @@ in
       plugins = [
         { name = "jeffreytse/zsh-vi-mode"; }
         { name = "catppuccin/zsh-syntax-highlighting"; }
+        { name = "Aloxaf/fzf-tab"; }
+        { name = "chisui/zsh-nix-shell"; }
       ];
     };
   };
@@ -223,7 +249,7 @@ in
   #    isDefault = true;
   #    settings = {
   #      "toolkit.legacyuserProfileCustomizations.stylesheets" = true;
-  #      "signon.rememberSignons" = false;
+  #      "signon.rememberSignons"  = false;
   #    };
   #    userChrome = builtins.readFile ./userChrome.css;
   #  };
