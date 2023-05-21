@@ -63,6 +63,8 @@ in
 
   home.packages = with pkgs; [
     appimage-run
+    yuzu-mainline
+    openjdk
     arandr
     bat
     btop

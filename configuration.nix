@@ -36,6 +36,19 @@
     };
   };
 
+  services.udev.packages = [
+  (pkgs.writeTextFile {
+      name = "nsusbloader_rcm";
+      text = ''
+        SUBSYSTEM=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7321", MODE="0666"
+      '';
+      destination = "/etc/udev/rules.d/99-NS-RCM.rules";
+    }
+  )
+  ];
+
+
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
