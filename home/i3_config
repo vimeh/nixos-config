@@ -13,6 +13,9 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 exec --no-startup-id volctl
 
+# increase key repeat rate: 200ms delay, 60 presses per second
+exec --no-startup-id xset r rate 200 60
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
